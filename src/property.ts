@@ -1,7 +1,10 @@
 import type { Tenant } from "./tenant";
+import { isValidUkPostcode } from "./postcode";
+
+type PropertyId = string;
 
 type Property = {
-  id: string;
+  id: PropertyId;
   address: string;
   postcode: string;
   monthlyRentPence: number;
@@ -23,4 +26,19 @@ function calculateAverageRentByRegion(properties: Property[], region: string): n
   return Math.floor(totalRent / propertiesInRegion.length);
 }
 
-export { Property, calculateAverageRentByRegion };
+/**
+ * @throws {Error}
+ */
+function calculateRentPerTenant(property: Property): number {
+  if (property.tenants.length === 0) {
+    throw new Error("Expected the property to have at least 1 tenant");
+  }
+
+  return Math.ceil(property.monthlyRentPence / property.tenants.length);
+}
+
+function findPropertiesWithInvalidPostcodes(properties: Property[]): PropertyId[] {
+  return properties.filter(p => !isValidUkPostcode(p.postcode)).map(({id}) => id);
+}
+
+export { Property, calculateAverageRentByRegion, calculateRentPerTenant, findPropertiesWithInvalidPostcodes };
