@@ -1,3 +1,5 @@
+import type { Tenant } from "./tenant";
+
 type Property = {
   id: string;
   address: string;
@@ -6,6 +8,7 @@ type Property = {
   region: string;
   capacity: number;
   tenancyEndDate: Date;
+  tenants: Tenant[];
 };
 
 function calculateAverageRentByRegion(properties: Property[], region: string): number {
