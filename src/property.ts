@@ -3,6 +3,8 @@ import { isValidUkPostcode } from "./postcode";
 
 type PropertyId = string;
 
+type PropertyStatus = "PROPERTY_VACANT" | "PARTIALLY_VACANT" | "PROPERTY_ACTIVE" | "PROPERTY_OVERDUE";
+
 type Property = {
   id: PropertyId;
   address: string;
@@ -41,4 +43,16 @@ function findPropertiesWithInvalidPostcodes(properties: Property[]): PropertyId[
   return properties.filter(p => !isValidUkPostcode(p.postcode)).map(({id}) => id);
 }
 
-export { Property, calculateAverageRentByRegion, calculateRentPerTenant, findPropertiesWithInvalidPostcodes };
+function getStatus(property: Property): PropertyStatus {
+  if (property.tenants.length === 0) {
+    return "PROPERTY_VACANT";
+  }
+
+  if (property.tenancyEndDate < new Date()) {
+    return "PROPERTY_OVERDUE";
+  }
+
+  return property.tenants.length === property.capacity ? "PROPERTY_ACTIVE" : "PARTIALLY_VACANT";
+}
+
+export { Property, calculateAverageRentByRegion, calculateRentPerTenant, findPropertiesWithInvalidPostcodes, getStatus };
