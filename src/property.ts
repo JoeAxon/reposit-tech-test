@@ -1,4 +1,5 @@
 import type { Tenant } from "./tenant";
+import type { CsvData } from "./csv";
 import { isValidUkPostcode } from "./postcode";
 
 type PropertyId = string;
@@ -15,6 +16,32 @@ type Property = {
   tenancyEndDate: Date;
   tenants: Tenant[];
 };
+
+function fromCsvData(propertyData: CsvData[], tenantData: CsvData[]): Property[] {
+  const propertyToTenants = tenantData.reduce<{[k: string]: Tenant[]}>((acc, data) => {
+    if (!acc[data.propertyId]) {
+      acc[data.propertyId] = [];
+    }
+
+    acc[data.propertyId].push({
+      id: data.id,
+      name: data.name,
+    });
+
+    return acc;
+  }, {});
+
+  return propertyData.map(d => ({
+    id: d.id,
+    address: d.address,
+    postcode: d.postcode,
+    monthlyRentPence: Number(d.monthlyRentPence),
+    region: d.region,
+    capacity: Number(d.capacity),
+    tenancyEndDate: new Date(d.tenancyEndDate),
+    tenants: propertyToTenants[d.id] || [],
+  }));
+}
 
 function calculateAverageRentByRegion(properties: Property[], region: string): number {
   const propertiesInRegion = properties.filter(p => p.region === region);
@@ -55,4 +82,13 @@ function getStatus(property: Property): PropertyStatus {
   return property.tenants.length === property.capacity ? "PROPERTY_ACTIVE" : "PARTIALLY_VACANT";
 }
 
-export { Property, calculateAverageRentByRegion, calculateRentPerTenant, findPropertiesWithInvalidPostcodes, getStatus };
+export {
+  Property,
+  PropertyId,
+  PropertyStatus,
+  calculateAverageRentByRegion,
+  calculateRentPerTenant,
+  findPropertiesWithInvalidPostcodes,
+  fromCsvData,
+  getStatus
+};
