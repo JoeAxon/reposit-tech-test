@@ -7,6 +7,23 @@ npm install
 npm test
 ```
 
+## Overview
+
+Most of the functionality lives in `src/property.ts`. I opted to use simple
+type aliases and functions throughout as I don't think the requirements
+warranted anything more elaborate.
+
+The provided data files are included in the `/data` directory.
+
+Tests are in the `/test` directory and are named to match the requirements that
+they relate to. The `test/index.test.ts` file exercises all of functionality so
+it might be a good place to start.
+
+## Versions
+
+I used node.js 23.10.0 (see .tool-versions). I imagine it should work on earlier
+versions but I haven't tested it.
+
 ## Requirements
 
 1. Calculate the average rent of properties by region. Please code a solution that satisfies the following acceptance criteria:
@@ -24,7 +41,7 @@ npm test
 
 3. Validate the postcode of all properties. Please code a solution that satisfies the following acceptance criteria:
 
-- Able to validate whether a postcode is a valid UK postcode.
+- Ableto validate whether a postcode is a valid UK postcode.
 -  Returns a list of property IDs which have an invalid postcode.
 
 4. Get the 'status' of a property. Please code a solution that satisfies the following acceptance criteria:
