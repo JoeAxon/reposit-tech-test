@@ -16,8 +16,8 @@ warranted anything more elaborate.
 The provided data files are included in the `/data` directory.
 
 Tests are in the `/test` directory and are named to match the requirements that
-they relate to. The `test/index.test.ts` file exercises all of functionality so
-it might be a good place to start.
+they relate to. The `test/index.test.ts` file exercises all of the functionality
+so it might be a good place to start.
 
 ## Versions
 
