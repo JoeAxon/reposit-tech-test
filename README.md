@@ -10,8 +10,8 @@ npm test
 ## Overview
 
 Most of the functionality lives in `src/property.ts`. I opted to use simple
-type aliases and functions throughout as I don't think the requirements
-warranted anything more elaborate.
+type aliases and functions throughout. More structure might be warranted given
+additional requirements.
 
 The provided data files are included in the `/data` directory.
 
@@ -41,7 +41,7 @@ versions but I haven't tested it.
 
 3. Validate the postcode of all properties. Please code a solution that satisfies the following acceptance criteria:
 
-- Ableto validate whether a postcode is a valid UK postcode.
+- Able to validate whether a postcode is a valid UK postcode.
 -  Returns a list of property IDs which have an invalid postcode.
 
 4. Get the 'status' of a property. Please code a solution that satisfies the following acceptance criteria:
